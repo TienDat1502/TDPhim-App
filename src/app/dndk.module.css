@@ -1,0 +1,106 @@
+
+
+.pageContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    background-color: #0a0a0a;
+    background-image: radial-gradient(circle, #1e1e1e 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  
+  .glowBlob {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(229,9,20,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .contentWrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  .logoWrap { text-align: center; margin-bottom: 28px; }
+  .logoText { font-size: 28px; font-weight: 800; color: #e50914; letter-spacing: -0.5px; text-decoration: none; }
+  .logoText span { color: #fff; }
+  .logoDesc { font-size: 13px; color: #555; margin-top: 6px; }
+  
+  .cardGlow {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(229,9,20,0.08), 0 24px 60px rgba(0,0,0,0.6);
+  }
+  
+  .tabs { display: flex; border-bottom: 1px solid #2a2a2a; }
+  .tabBtn {
+    flex: 1; padding: 16px 0; background: none; border: none; font-size: 14px; 
+    font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; transition: color 0.2s;
+  }
+  .tabActive { color: #fff; border-bottom: 2px solid #e50914; }
+  .tabInactive { color: #555; border-bottom: 2px solid transparent; }
+  
+  .formPadding { padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 18px; }
+  
+  .socialGroup { display: flex; gap: 10px; }
+  .socialBtn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; color: #ccc;
+    font-size: 13px; font-weight: 500; padding: 10px 12px; cursor: pointer; transition: all 0.2s;
+  }
+  .socialBtn:hover { background: #222; border-color: #444; color: #fff; }
+  
+  .dividerWrap { display: flex; align-items: center; gap: 12px; }
+  .dividerLine { flex: 1; height: 1px; background: #2a2a2a; }
+  .dividerText { font-size: 11px; color: #555; white-space: nowrap; }
+  
+  .inputLabel { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+  .inputLabelRow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .inputLabelRow label { margin-bottom: 0; }
+  
+  .inputWrapper { position: relative; }
+  .authInput {
+    width: 100%; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; color: #fff;
+    font-size: 14px; padding: 11px 14px; outline: none; transition: border-color 0.2s;
+  }
+  .authInput:focus { border-color: #e50914; box-shadow: 0 0 0 3px rgba(229,9,20,0.12); }
+  .authInput::placeholder { color: #444; }
+  
+  .passToggle {
+    background: none; border: none; color: #666; cursor: pointer; font-size: 16px; 
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%); transition: color 0.2s;
+  }
+  .passToggle:hover { color: #aaa; }
+  
+  .forgotLink { color: #888; font-size: 12px; text-decoration: none; transition: color 0.2s; }
+  .forgotLink:hover { color: #e50914; }
+  
+  .checkboxWrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  .checkbox { width: 15px; height: 15px; border: 1px solid #444; border-radius: 3px; background: #111; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .checkbox.checked { background: #e50914; border-color: #e50914; }
+  .checkboxLabel { font-size: 13px; color: #888; user-select: none; }
+  .checkboxLabelSmall { font-size: 12px; color: #666; user-select: none; line-height: 1.6; }
+  
+  .linkAccent { color: #e50914; text-decoration: none; font-weight: 600; }
+  .linkAccent:hover { text-decoration: underline; }
+  
+  .btnPrimary {
+    width: 100%; background: #e50914; color: #fff; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 700; padding: 12px; cursor: pointer; letter-spacing: 0.3px; transition: background 0.2s;
+  }
+  .btnPrimary:hover { background: #f40612; }
+  
+  .switchPage { text-align: center; font-size: 13px; color: #666; }
+  .footerNote { text-align: center; font-size: 11px; color: #444; margin-top: 20px; }
+  .footerNote a { color: #555; text-decoration: none; }

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/app/phim-le/page.jsx", "src/app/nam-phat-hanh/page.jsx", "src/app/phim/[slug]/page.jsx", "src/app/phim-bo/page.jsx", "src/app/phim-chieu-rap/page.jsx", "src/app/quoc-gia/page.jsx", "src/app/the-loai/page.jsx", "src/components/TrendingCard.jsx", "src/data/movies.js", "src/components/MovieCard.jsx", "src/app/page.jsx"  ],
   "exclude": ["node_modules"]
 }
