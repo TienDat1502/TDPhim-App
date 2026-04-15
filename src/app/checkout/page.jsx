@@ -1,9 +1,10 @@
 "use client";
-
+import { Suspense } from "react";
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CheckoutPage() {
+// --- 1. PHẦN NỘI DUNG CHÍNH (Chứa useSearchParams) ---
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -59,7 +60,6 @@ export default function CheckoutPage() {
       return;
     }
 
-    // 1. Bật trạng thái Loading (Quay vòng)
     setIsProcessing(true);
 
     try {
@@ -77,17 +77,12 @@ export default function CheckoutPage() {
       const data = await res.json();
 
       if (res.ok) {
-        // 2. GIẢ LẬP LOAD 5 GIÂY (Chờ Ngân hàng / Admin xử lý)
         setTimeout(() => {
-          setIsProcessing(false); // Tắt vòng xoay
+          setIsProcessing(false);
           alert("✅ Thanh toán thành công!\nDịch vụ của bạn đã được kích hoạt.");
-          
-          // Chuyển hướng sau khi thành công
           router.push(type === 'vip' ? '/profile' : `/phim/${id}`);
-        }, 5000); // 5000 mili-giây = 5 giây
-
+        }, 5000);
       } else {
-        // Nếu API báo lỗi ngay lập tức
         setIsProcessing(false);
         alert(data.error || "Giao dịch bị từ chối. Vui lòng thử lại.");
       }
@@ -95,8 +90,6 @@ export default function CheckoutPage() {
       setIsProcessing(false);
       alert("Lỗi kết nối máy chủ. Vui lòng thử lại sau!");
     }
-    // Chú ý: Ở đây mình bỏ khối `finally { setIsProcessing(false) }` cũ đi 
-    // vì chúng ta cần nó tiếp tục quay trong lúc đếm ngược 5 giây ở hàm setTimeout.
   };
 
   return (
@@ -107,20 +100,18 @@ export default function CheckoutPage() {
       `}</style>
 
       <div className="min-vh-100 text-white position-relative" style={{ backgroundColor: '#09090b' }}>
-        
         <div className="position-absolute top-0 start-50 translate-middle-x" 
              style={{ width: '800px', height: '400px', background: 'radial-gradient(ellipse, rgba(220,38,38,0.15) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }}>
         </div>
 
         <div className="position-relative" style={{ zIndex: 1 }}>
-          
           <nav className="navbar sticky-top border-bottom border-secondary border-opacity-25" style={{ background: 'rgba(9,9,11,0.85)', backdropFilter: 'blur(16px)' }}>
             <div className="container py-1">
               <div className="d-flex align-items-center gap-3">
                 <button className="btn btn-dark rounded-circle border-secondary border-opacity-50 d-flex align-items-center justify-content-center p-0" 
                         style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.05)' }} 
                         onClick={() => router.back()}
-                        disabled={isProcessing} /* Khóa nút Back khi đang load 5s */
+                        disabled={isProcessing}
                 >
                   <i className="bi bi-arrow-left"></i>
                 </button>
@@ -136,8 +127,6 @@ export default function CheckoutPage() {
             <div className="row justify-content-center">
               <div className="col-xl-9">
                 <div className="row g-4">
-                  
-                  {/* CỘT TRÁI */}
                   <div className="col-lg-7" style={{ pointerEvents: isProcessing ? 'none' : 'auto', opacity: isProcessing ? 0.6 : 1 }}>
                     <h1 className="fw-bold fs-2 text-white mb-2">Xác nhận thanh toán</h1>
                     <p className="text-white-50 small mb-5">Kiểm tra đơn hàng và chọn phương thức phù hợp</p>
@@ -185,13 +174,11 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  {/* CỘT PHẢI (SIDEBAR) */}
                   <div className="col-lg-5">
                     <div className="card border-secondary border-opacity-25 rounded-4 sticky-top" style={{ top: '85px', background: 'rgba(255,255,255,0.03)' }}>
                       <div className="card-header border-bottom border-secondary border-opacity-25 bg-transparent p-3">
                         <span className="text-white-50 small fw-bold text-uppercase" style={{ letterSpacing: '1px', fontSize: '11px' }}>Tóm tắt đơn hàng</span>
                       </div>
-
                       <div className="card-body p-4">
                         <div className="d-flex justify-content-between mb-2">
                           <span className="text-white-50 small">Tạm tính</span>
@@ -201,9 +188,7 @@ export default function CheckoutPage() {
                           <span className="text-white-50 small">Phí giao dịch</span>
                           <span className="badge text-success rounded-pill fw-bold" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.2)' }}>Miễn phí</span>
                         </div>
-
                         <hr className="border-secondary border-opacity-50 mb-4" />
-
                         <div className="d-flex justify-content-between align-items-end mb-4">
                           <span className="text-white-50 fw-bold small">Tổng thanh toán</span>
                           <div className="text-danger fw-bold lh-1">
@@ -211,7 +196,6 @@ export default function CheckoutPage() {
                             <span className="fs-5 ms-1">₫</span>
                           </div>
                         </div>
-
                         <button className="btn btn-danger w-100 py-3 rounded-3 fw-bold d-flex justify-content-center align-items-center gap-2" 
                                 onClick={handlePayment} disabled={isProcessing}>
                           {isProcessing ? (
@@ -220,20 +204,9 @@ export default function CheckoutPage() {
                             <><i className="bi bi-shield-lock-fill fs-5"></i> THANH TOÁN NGAY</>
                           )}
                         </button>
-
-                        <div className="text-center text-white-50 mt-3 small" style={{ fontSize: '11px' }}>
-                          Bằng việc thanh toán, bạn đồng ý với <br /> Điều khoản dịch vụ của TDPhim TV
-                        </div>
-                      </div>
-
-                      <div className="card-footer border-top border-secondary border-opacity-25 bg-transparent p-3 d-flex justify-content-center gap-4 text-white-50" style={{ fontSize: '11px' }}>
-                        <span><i className="bi bi-shield-check me-1"></i> SSL</span>
-                        <span><i className="bi bi-patch-check me-1"></i> An toàn</span>
-                        <span><i className="bi bi-envelope-check me-1"></i> Email</span>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -241,5 +214,14 @@ export default function CheckoutPage() {
         </div>
       </div>
     </>
+  );
+}
+
+// --- 2. HÀM CHÍNH BỌC TRONG SUSPENSE ĐỂ FIX LỖI VERCEL ---
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-vh-100 bg-dark text-white d-flex align-items-center justify-content-center">Đang tải trang thanh toán...</div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
